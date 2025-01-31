@@ -2,14 +2,14 @@
 
 Since DTXMania doesn't support sorting very well, create copies of a song folder sorted in different ways. Currently supported is alphabetically and by difficulty.
 
-It does this by making symlinks to the original files -- see [[#How it works]] for a greater description of what this implies.
+It does this by making symlinks to the original files -- see [How it works](#How-it-works) for a greater description of what this implies.
 
 ## Installation
 
  * Python 3.9+
  * If you want japanese text processing (for alphabetical sort -- see below) then you will have to install dependencies.
    * `pip install .`
- * You will probably run into [[#OSError: [WinError 1314] ]] -- you will need to enable Developer Mode to run this script.
+ * You will probably run into [OSError: WinError 1314](#Errors) -- you will need to enable Developer Mode to run this script.
  * `python dtx_symlink.py (input song folder) (output song folder)`
    * e.g. `python dtx_symlink.py DTXFiles/DTXFiles.Gitadora DTXFiles/DTXFiles.Gitadora_sorted`
    * The sorted "Alphabetical" and "Difficulty" folders will be placed within `DTXFiles/DTXFiles.Gitadora_sorted`.
@@ -31,8 +31,8 @@ The program leaves it to you to decide which sorting method to use, one might be
 
 The script works by making symlinks to the original files, so they just look like separate song packs to DTXMania. The advantages and disadvantages are below:
 
- + + Since DTXMania keeps score files in the song folder, this also retains leaderboards between the copies of songs. (Although when you run DTXMania, the leaderboards won't update until you restart.)
- -  - Each copy of the song has to be individually processed, so loading will take 3 times longer.
+ * (+) Since DTXMania keeps score files in the song folder, this also retains leaderboards between the copies of songs. (Although when you run DTXMania, the leaderboards won't update until you restart.)
+ * (-) Each copy of the song has to be individually processed, so loading will take 3 times longer.
 
 There might be better methods to achieving some kind of sorting but I'm not sure.
 
