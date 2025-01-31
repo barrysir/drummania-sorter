@@ -13,7 +13,7 @@ def setup_logging():
         'disable_existing_loggers': False,
         "formatters": {
             "simple": {
-                "format": '[{asctime}] [{levelname:<8}] {name}: {message}',
+                "format": u'[{asctime}] [{levelname:<8}] {name}: {message}',
                 'datefmt': '%Y-%m-%dT%H:%M:%S%z',
                 'style': '{',
             }
@@ -79,7 +79,7 @@ def group_alpha(title: str) -> str:
     first_letter = title.strip()[0]
     if first_letter.isdigit():
         return '0-9'
-    elif first_letter.isalpha():
+    elif first_letter.isascii() and first_letter.isalpha():
         first_letter = first_letter.upper()
         if first_letter < 'A' or first_letter > 'Z':
             logging.warning(f"Alphabetical character falls outside of [A,Z]?? {title} -> {first_letter}")
