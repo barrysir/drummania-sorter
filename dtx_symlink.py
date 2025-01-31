@@ -202,6 +202,17 @@ class AlphaGroupingMethods:
     SONG = 's'
     FOLDER = 'f'
 
+class ProgressBar:
+    def __init__(self):
+        self.prev_line_length = 0
+    
+    def print(self, message):
+        # when printing a longer message then a shorter message, 
+        # the difference needs to be filled with spaces
+        # to clear out the characters from the longer message
+        print(f'\r{message:<{self.prev_line_length}}', end='\r')
+        self.prev_line_length = len(message)
+
 if __name__ == "__main__":
     import argparse
     import inspect
@@ -254,11 +265,12 @@ if __name__ == "__main__":
     # doesn't catch any errors thrown in the iterator, so I want to include it this time (so I can print when it failed)
     iterator = load_dtx_files(INPUT_PATH, FROM_DB, CACHE_TO_DB, DB_PATH)
     i = 1
+    pbar = ProgressBar()
     while True:
         try:
             dtx_path,dtx = next(iterator)
             dtx_folder = dtx_path.parent
-            print(f'\r{i} | {dtx_folder.relative_to(INPUT_PATH)}', end='\r')
+            pbar.print(f'{i} | {dtx_path.relative_to(INPUT_PATH)}')
             i += 1
 
             # sort by difficulty
