@@ -146,6 +146,10 @@ class DTXFile:
             elif name.upper() == 'DLEVEL':
                 tags['level'] = int(val)
                 tags_needed.remove('level')
+            elif name.upper() in ('GLEVEL', 'BLEVEL'):
+                # it's a guitar chart, skip processing it
+                logging_hack.warning(f"Guitar/bass chart detected (tag {name.upper()!r} found), skipping")
+                return None
             
             if len(tags_needed) == 0:
                 break

@@ -170,7 +170,10 @@ def load_dtx_files(input_path, from_db, cache_to_db, db_path) -> Iterator[Tuple[
         db = DTXDatabase(input_path)
         try:
             for dtx_path in iter_dtx_files(input_path):
+                logging_hack.set_song(dtx_path.relative_to(input_path))
                 dtx = DTXFile.load(dtx_path)
+                if dtx is None:
+                    continue
                 yield (dtx_path, dtx)
                 if cache_to_db:
                     db.set(dtx_path, dtx)
@@ -273,8 +276,6 @@ if __name__ == "__main__":
             dtx_folder = dtx_path.parent
             pbar.print(f'{i} | {dtx_path.relative_to(INPUT_PATH)}')
             i += 1
-
-            logging_hack.set_song(dtx_path.relative_to(INPUT_PATH))
 
             # sort by difficulty
             # first sort into difficulty groups (0.00-0.50, 0.50-1.00, ...)
