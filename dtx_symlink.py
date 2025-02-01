@@ -4,6 +4,7 @@ import logging
 import logging.config
 from typing import Iterator, Tuple, Optional
 import pickle
+import logging_hack
 
 def setup_logging():
     import sys
@@ -60,7 +61,7 @@ def group_by_difficulty(dtx: DTXFile) -> Tuple[str, Optional[str]]:
             level = level/10
         
         if level < 0 or level > 100:
-            logging.warning(f"Illegal difficulty found - {level}")
+            logging_hack.warning(f"Illegal difficulty found - {level}")
             return "Error", None
         
         # group into intervals of 0.5
@@ -82,7 +83,7 @@ def group_alpha(title: str) -> str:
     elif first_letter.isascii() and first_letter.isalpha():
         first_letter = first_letter.upper()
         if first_letter < 'A' or first_letter > 'Z':
-            logging.warning(f"Alphabetical character falls outside of [A,Z]?? {title} -> {first_letter}")
+            logging_hack.warning(f"Alphabetical character falls outside of [A,Z]?? {title} -> {first_letter}")
             return "Error"
 
         # choose the letter group it falls into
@@ -102,7 +103,7 @@ def group_alpha(title: str) -> str:
         try:
             return kana_group(kana[0])
         except:
-            logging.warning(f"Unknown kana found: {kana}, {kana[0]}")
+            logging_hack.warning(f"Unknown kana found: {kana}, {kana[0]}")
             return 'Error'
     else:
         return 'Other'
@@ -272,6 +273,8 @@ if __name__ == "__main__":
             dtx_folder = dtx_path.parent
             pbar.print(f'{i} | {dtx_path.relative_to(INPUT_PATH)}')
             i += 1
+            
+            logging_hack.set_song(dtx_folder)
 
             # sort by difficulty
             # first sort into difficulty groups (0.00-0.50, 0.50-1.00, ...)

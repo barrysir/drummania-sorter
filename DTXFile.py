@@ -3,6 +3,8 @@ import re
 import io
 import logging
 
+import logging_hack
+
 class FileReader:
     CHUNK_SIZE = 1024
 
@@ -149,7 +151,7 @@ class DTXFile:
                 break
 
         if len(tags_needed) > 0:
-            logging.warning(f"TAGS MISSING: {tags_needed}")
+            logging_hack.warning(f"TAGS MISSING: {tags_needed}")
         
         return cls(**tags)
 
