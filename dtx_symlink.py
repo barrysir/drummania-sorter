@@ -273,8 +273,8 @@ if __name__ == "__main__":
             dtx_folder = dtx_path.parent
             pbar.print(f'{i} | {dtx_path.relative_to(INPUT_PATH)}')
             i += 1
-            
-            logging_hack.set_song(dtx_folder)
+
+            logging_hack.set_song(dtx_path.relative_to(INPUT_PATH))
 
             # sort by difficulty
             # first sort into difficulty groups (0.00-0.50, 0.50-1.00, ...)
